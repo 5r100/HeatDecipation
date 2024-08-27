@@ -42,4 +42,6 @@ def main(num_ones_a,num_ones_b):
 
 
 if __name__ == "__main__":
-    main(6,4)
+    a = int(input("Number of phonons in A: "))
+    b = int(input("Number of phonons in B: "))
+    main(a,b)
