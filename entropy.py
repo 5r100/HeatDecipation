@@ -1,14 +1,12 @@
 import itertools
 import numpy as np
 
-def main(num_ones_a,num_ones_b):
+def probabilty(num_ones):
     total_positions = 16
 
-    if num_ones_a + num_ones_b > total_positions:
+    if num_ones > total_positions:
         print("total count of phonons exceeds the atoms")
         return
-
-    num_ones = num_ones_a+num_ones_b
 
     combinations = []
     for num_ones_a in range(num_ones+1):
@@ -38,10 +36,22 @@ def main(num_ones_a,num_ones_b):
     result = {}
     for percent in percents:
         result[percent] = (percents[percent]/len(combinations))*100
-    print(result)
+
+    ordered_result = {}
+    for (key1, key2), value in result.items():
+        sorted_key = tuple(sorted((key1, key2)))
+        if sorted_key in ordered_result:
+            ordered_result[sorted_key] += value
+        else:
+            ordered_result[sorted_key] = value
+    return ordered_result
 
 
 if __name__ == "__main__":
-    a = int(input("Number of phonons in A: "))
-    b = int(input("Number of phonons in B: "))
-    main(a,b)
+    for phonons in range(12,16):
+        result = probabilty(phonons)
+
+        max_pos = max(result,key=result.get)
+        min_pos = min(result,key=result.get)
+
+        print(f"|{phonons}|{max_pos}|{result[max_pos]}|{min_pos}|{result[min_pos]}|")
